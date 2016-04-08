@@ -13,8 +13,7 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #512DA8;
-  height: 40px;
+  height: 100px;
   width: 100vw;
   padding-left: 10px;
   padding-top: 20px;
@@ -22,11 +21,10 @@ header {
 
 header .logo {
   color: white;
-  font-size: 2em;
+  font-size: 3em;
 }
 
 main {
-  padding: 30px 120px;
   height: 100%;
   margin-top: 100px;
 }

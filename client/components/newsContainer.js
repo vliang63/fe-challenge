@@ -4,10 +4,10 @@ var NewsContainer = React.createClass({
 	render: function(){
 		return (
 			<div>
-				<header>
+				<header className="teal lighten-2">
 				    <h2 className="logo">Newsie</h2>
 				</header>
-				<main>
+				<main className="container">
 					<NewsList />
 				</main>
 			</div>
@@ -66,13 +66,11 @@ var NewsList = React.createClass({
 		var accountEventsData = this.state.accountEventsData;
 		if (this.state.filter){
 			accountEventsData = accountEventsData.filter(function(item){
-				var stringifiedData = JSON.stringify(accountEventData);
-				return stringifiedData.indexOf(this.state.filter) >= 0;
-			});
+				var stringifiedData = JSON.stringify(item).toLowerCase();
+				return stringifiedData.indexOf(this.state.filter.toLowerCase()) >= 0;
+			}.bind(this));
 		}
 		if(this.state.sort){
-			console.log('sorting')
-			console.log(this.state.sort)
 			accountEventsData.sort(function(item1, item2){
 				if(item1[this.state.sort] < item2[this.state.sort]) {
 					return -1;
@@ -92,14 +90,17 @@ var NewsList = React.createClass({
 		return (
 			<div>
 				<section className="controls">
-					<input value={this.state.filter} onChange={this.changeFilter} className="filter-accounts" type="text" />
-					<label>Sort By:</label>
-					<select onChange={this.changeSort}>
-						<option value=""></option>
+					<label for="feed-filter">Filter:</label>
+					<input id="feed-filter" className="input-field col s12" value={this.state.filter} onChange={this.changeFilter} className="filter-accounts" type="text" />
+					<label for="feed-sort">Sort By:</label>
+					<select id='feed-sort' className="browser-default input-field col s12" onChange={this.changeSort}>
+						<option value="" defaultValue disabled></option>
 						<option value="accountId">Account Id</option>
 						<option value="eventSnippet">Event Description</option>
 						<option value="eventTime">Event Time</option>
 						<option value="eventType">Event Type</option>
+						<option value="firstName">First Name</option>
+						<option value="lastName">Last Name</option>
 					</select>
 				</section>
 				<section className="feed">
@@ -116,12 +117,22 @@ var ListFeedItem = React.createClass({
 	
 	render: function(){
 		return (
-			<li className="feed-item">
-				<img src={this.props.data.image} />
-				<h4>{this.props.data.firstName} {this.props.data.lastName}</h4>
-				<span>{this.props.data.eventType}</span>
-				<br></br>
-				<span>{this.props.data.eventSnippet}</span>
+			<li className="feed-item row">
+				<div className="item-content">
+					<div className="item-image col 4">
+						<img src={this.props.data.image} />
+					</div>
+					<div className="item-account col m4">
+						<p className="data-title">Name: </p>
+						<p>{this.props.data.firstName} {this.props.data.lastName}</p>
+					</div>
+					<div className="item-event col m4">
+						<p className="data-title">Event Type: </p>
+						<p>{this.props.data.eventType}</p>
+						<p className="data-title">Event Description: </p>
+						<p>{this.props.data.eventSnippet}</p>
+					</div>
+				</div>
 			</li>
 		)
 	}
