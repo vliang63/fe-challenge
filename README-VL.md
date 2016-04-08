@@ -16,3 +16,10 @@ This project utilized the following technologies/libraries to complete the objec
 - Babel
 - Materialize
 - JQuery
+
+Components: A NewsContainer is composed of a NewsList, which in turn is composed of the 'controls' section and a list of 'feed-items'.
+
+## Given more time
+- Refactor out comoponents to be more modular
+- Refactor components to separate between rendering and state
+- Additional Styling

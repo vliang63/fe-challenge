@@ -27,6 +27,9 @@ var NewsList = React.createClass({
   },
 
   componentDidMount: function(){
+      //Make an ajax request to retrieve accounts and events data
+      //Then perform a mapping based on the one-to-one relationship between accounts and events
+        //Save combined data to the state as accountEventsData
       $.get('../data/events.json', function(eventsData){
           var eventsData = eventsData;
           var indexedEvents = [];
@@ -65,6 +68,7 @@ var NewsList = React.createClass({
   },
 
   render: function(){
+    //Filter and sort if any filters or sorts are specified to create an array of ListFeedItem Components
     var accountEventsData = this.state.accountEventsData;
     if (this.state.filter){
         accountEventsData = accountEventsData.filter(function(item){

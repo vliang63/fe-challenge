@@ -43,4 +43,4 @@ gulp.task('watch', ['serve'], function(){
 	gulp.watch('./client/components/*.js', ['browserify']);
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch', 'browserify']);
