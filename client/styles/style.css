@@ -1,41 +1,37 @@
 img {
-	height: 75px;
-	width: 100px;
-	margin-bottom: 15px;
-}
-
-select{
-	z-index: -1;
+  height: 75px;
+  width: 100px;
+  margin-bottom: 15px;
 }
 
 p{
-	margin-bottom:5px;
+  margin-bottom:5px;
 }
 
 .container{
-	margin-top: 100px;
+  margin-top: 100px;
 }
 
 .input-field{
-	margin-top: .5rem;
+  margin-top: .5rem;
 }
 
 #feed-filter {
-	margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .feed-item {
-	list-style-type: none;
-	border: solid 1px grey;
-	padding: 10px;
+  list-style-type: none;
+  border: solid 1px grey;
+  padding: 10px;
 }
 
 .item-content{
-	margin-top: 15px;
+  margin-top: 15px;
 }
 
 .data-title{
-	display: inline;
-	font-size: .75em;
-	color: grey;
+  display: inline;
+  font-size: .75em;
+  color: grey;
 }

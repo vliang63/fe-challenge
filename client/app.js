@@ -5,6 +5,6 @@ var ReactDOM = require('react-dom');
 
 
 ReactDOM.render(
-	<NewsContainer />,
-	document.getElementById('content')	
+  <NewsContainer />,
+  document.getElementById('content')  
 )
