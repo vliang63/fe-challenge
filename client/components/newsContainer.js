@@ -21,7 +21,8 @@ var NewsList = React.createClass({
 			accountsData: [],
 			eventsData: [],
 			accountEventsData: [],
-			filter: ''
+			filter: '',
+			sort: ''
 		}
 	},
 	componentDidMount: function(){
@@ -35,7 +36,8 @@ var NewsList = React.createClass({
 			$.get('../data/accounts.json', function(accountsData){
 				var accountsData = accountsData;
 				var accountEventsData = accountsData.map(function(accountData){
-					accountData['eventData'] = indexedEvents[accountData['accountId']]['event'];
+					accountData['eventType'] = indexedEvents[accountData['accountId']]['event']['eventType'];
+					accountData['eventSnippet'] = indexedEvents[accountData['accountId']]['event']['snippet'];
 					accountData['eventTime'] = indexedEvents[accountData['accountId']]['time'];
 					return accountData;
 				});
@@ -54,26 +56,51 @@ var NewsList = React.createClass({
 			filter: e.target.value
 		})
 	},
+
+	changeSort: function(e){
+		this.setState({
+			sort: e.target.value
+		})
+	},
 	render: function(){
-		var listItems = this.state.accountEventsData.map(function(accountEventData, i){				
-			var stringifiedData = JSON.stringify(accountEventData);
-			if(this.state.filter){
-				if(stringifiedData.indexOf(this.state.filter) >= 0){
-					return (
-						<ListFeedItem key={i} data={accountEventData} />		
-					)
+		var accountEventsData = this.state.accountEventsData;
+		if (this.state.filter){
+			accountEventsData = accountEventsData.filter(function(item){
+				var stringifiedData = JSON.stringify(accountEventData);
+				return stringifiedData.indexOf(this.state.filter) >= 0;
+			});
+		}
+		if(this.state.sort){
+			console.log('sorting')
+			console.log(this.state.sort)
+			accountEventsData.sort(function(item1, item2){
+				if(item1[this.state.sort] < item2[this.state.sort]) {
+					return -1;
 				}
-			}else{
-				return (
-					<ListFeedItem key={i} data={accountEventData} />		
-				)
-			}
-		}.bind(this));
+				if(item1[this.state.sort] > item2[this.state.sort]) {
+					return 1;
+				}
+				return 0;
+			}.bind(this));
+		}
+		var listItems = accountEventsData.map(function(accountEventData, i){
+			return (
+				<ListFeedItem key={i} data={accountEventData} />		
+			)
+		});
 
 		return (
 			<div>
 				<section className="controls">
 					<input value={this.state.filter} onChange={this.changeFilter} className="filter-accounts" type="text" />
+					<label>Sort By:</label>
+					<select onChange={this.changeSort}>
+						<option value=""></option>
+						<option value="accountId">Account Id</option>
+						<option value="eventSnippet">Event Description</option>
+						<option value="eventTime">Event Time</option>
+						<option value="eventType">Event Type</option>
+					</select>
 				</section>
 				<section className="feed">
 					{listItems}
@@ -92,6 +119,9 @@ var ListFeedItem = React.createClass({
 			<li className="feed-item">
 				<img src={this.props.data.image} />
 				<h4>{this.props.data.firstName} {this.props.data.lastName}</h4>
+				<span>{this.props.data.eventType}</span>
+				<br></br>
+				<span>{this.props.data.eventSnippet}</span>
 			</li>
 		)
 	}
